@@ -46,7 +46,7 @@ $books = [
     ]
 ];
 //    ᓚᘏᗢ
-// Function to apply a 10% discount to all books in the "Science Fiction" genre
+//2. Function to apply a 10% discount to all books in the "Science Fiction" genre
 function applyDiscounts(array &$books) {
     foreach ($books as &$book) {
         if ($book['genre'] === 'Science Fiction') {
@@ -59,7 +59,7 @@ function applyDiscounts(array &$books) {
             $book['original_price'] = $book['price'];
             $book['price'] *= 0.95; // Apply 5% discount
         }else{
-            $book['original_price'] = $book['price']; // For non-Science Fiction books, store original price as well
+            $book['original_price'] = $book['price'];
         }
     }
 }
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = isset($_POST['price']) && is_numeric($_POST['price']) ? floatval($_POST['price']) : 0;
 
     if ($title && $author && $genre && $price > 0) {
-        // Add the new book to the inventory
+        // Add the new book
         $books[] = [
             'title' => $title,
             'author' => $author,
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Apply discounts again
         applyDiscounts($books);
 
-        // Log the new book addition to the file
+        
         $log_entry = sprintf(
             "[%s] IP: %s | UA: %s | Added book: \"%s\" (%s, %.2f)\n",
             date('Y-m-d H:i:s'),
@@ -98,13 +98,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Calculate the total price of all books after discounts
+//ᓚᘏᗢ
+//4. Total price calculator
 $total_price = 0;
 foreach ($books as $book) {
     $total_price += $book['price'];
 }
 
-// Current date and time, IP, and user agent
+//ᓚᘏᗢ
+// 6. server info & timestamp
 $date_time = date('Y-m-d H:i:s');
 $ip_address = $_SERVER['REMOTE_ADDR'];
 $user_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -132,8 +134,8 @@ $user_agent = $_SERVER['HTTP_USER_AGENT'];
 </head>
 <body>
     <h1>Online Bookstore</h1>
-    
-    <!-- Form to add new book -->
+    <!--ᓚᘏᗢ-->
+    <!-- 3. User imput handling -->
     <form action="" method="POST">
         <h2>Add New Book</h2>
         <label for="title">Title:</label>
@@ -158,7 +160,8 @@ $user_agent = $_SERVER['HTTP_USER_AGENT'];
         <li>Comedy</li>
         <li>Fantasy</li>
     </ul>
-    
+<!--ᓚᘏᗢ-->
+<!-- 5. Output Formating-->
     <table>
         <thead>
             <tr>
